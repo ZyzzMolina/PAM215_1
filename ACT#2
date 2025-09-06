@@ -1,0 +1,83 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package pamapp;
+
+/**
+ *
+ * @author cmhz
+ */
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class InterfazPAM extends JFrame {
+
+    private inicioPAM info; // Objeto para acceder a los métodos
+
+    private JTextArea areaTexto;
+    private JButton btnReglamento, btnLineamientos, btnFechas, btnPorcentajes;
+
+    public InterfazPAM() {
+        super("Aplicación PAM");
+        info = new inicioPAM();
+
+        // Configuración general de ventana
+        setSize(500, 400);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        // Área de texto
+        areaTexto = new JTextArea();
+        areaTexto.setEditable(false);
+        add(new JScrollPane(areaTexto), BorderLayout.CENTER);
+
+        // Panel de botones
+        JPanel panelBotones = new JPanel();
+        panelBotones.setLayout(new GridLayout(2, 2, 10, 10));
+
+        btnReglamento = new JButton("Reglamento");
+        btnLineamientos = new JButton("Lineamientos");
+        btnFechas = new JButton("Fechas");
+        btnPorcentajes = new JButton("Porcentajes");
+
+        panelBotones.add(btnReglamento);
+        panelBotones.add(btnLineamientos);
+        panelBotones.add(btnFechas);
+        panelBotones.add(btnPorcentajes);
+
+        add(panelBotones, BorderLayout.SOUTH);
+
+        // Acciones de los botones
+        btnReglamento.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                areaTexto.setText(info.ReglamentoPOO());
+            }
+        });
+
+        btnLineamientos.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                areaTexto.setText(info.LineamientosClassroom());
+            }
+        });
+
+        btnFechas.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                areaTexto.setText(info.FechasDeParciales());
+            }
+        });
+
+        btnPorcentajes.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                areaTexto.setText(info.PorcentajesPorParcial());
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+        InterfazPAM ventana = new InterfazPAM();
+        ventana.setVisible(true);
+    }
+}
