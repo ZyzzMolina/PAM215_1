@@ -1,0 +1,80 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package pamapp;
+
+/**
+ *
+ * @author cmhz
+ */
+public class inicioPAM {
+
+    // Método que despliega el reglamento de la materia
+   public String ReglamentoPOO() {
+        String reglamento = "REGLAMENTO Y COMENTARIOS DEL PROFESOR\n\n"
+                + "1. Se requiere 80% de asistencia para tener derecho a evaluación parcial y 80% de trabajos en clase.\n"
+                + "2. Se permitirán 10 minutos de tolerancia y si el alumno llega después de este tiempo puede permanecer en la clase, "
+                + "pero no se tomará la asistencia (Solamente en los horarios de 10:10 a.m. y 14:10 p.m.).\n"
+                + "3. Las faltas deberán ser justificadas mediante el correo institucional con un plazo máximo de 24 horas posteriores "
+                + "a la falta en clase mediante correo del tutor (a). Las justificaciones entregadas fuera de la fecha límite no permitirán la aceptación, "
+                + "únicamente aceptarán recetas médicas y artículos jurídicos. (De forma física deben ser presentados en la siguiente sesión de clase).\n"
+                + "4. Las tareas y trabajos deberán subirse al Classroom de forma individual y no se recibirán de manera extemporánea. "
+                + "Salvo previa justificación válida y dentro del límite indicado.\n"
+                + "5. Las tareas y trabajos presentarlas en tiempo y forma. La demora de un trabajo o tarea sin justificante y/o con justificante fuera del límite no se acepta.\n"
+                + "6. Utilizar el Correo institucional para trabajar bajo la plataforma Google Classroom.\n"
+                + "7. El plagio o copia de trabajos y/o exámenes, será condicionado a reprobar la o las asignaturas y se reportará el área correspondiente.\n"
+                + "8. Cualquier deshonestidad académica será sancionada reportando y perdiendo la parcial sin derecho a examen final.\n"
+                + "9. En caso de laptop y/o dispositivos de la institución, si se da mal uso como instalación de programas externos, aplicativos, compañeros "
+                + "o cualquier persona por su pertenencia a la universidad, se realizará una primera llamada de atención. "
+                + "Si el alumno hace caso omiso teniendo que abandonar el aula, tres incidencias de este tipo el alumno no tendrá derecho a examen final o parcial.\n"
+                + "10. No se permite el uso de dispositivos móviles durante clases, a menos que se indiquen actividades que lo requieran.\n"
+                + "11. Prohibido comer y tomar líquidos en el salón.\n"
+                + "12. Prohibido correr dentro del salón.\n"
+                + "13. Prohibido sentarse en mesas y bancas, así como columpiarse en las sillas.\n"
+                + "14. Todo tema académico debe ser revisado primero por el profesor por parte del alumno con el docente, de no resolverse, pasar con su respectivo tutor, "
+                + "y de ser necesario con la coordinación de carrera. En caso de no resolverse pasar a la dirección del programa educativo "
+                + "(Debe mantenerse este seguimiento de forma obligatoria).\n"
+                + "15. Cualquier situación no prevista en el presente reglamento será tratada directamente con la dirección del programa educativo.\n"
+                + "16. El día destinado a entrega de calificaciones todos los estudiantes deben estar presentes, ese día se entregarán exámenes y se brindará retroalimentación "
+                + "de los resultados. En caso de no estar presente se tiene que tramitar con la coordinación de carrera la solicitud de asistencias a sesiones de entrega "
+                + "final de materia, una vez firmado el aceptado por el 50% más el jefe de grupo, es vigente para todo alumno inscrito en el curso aunque no esté presente en la primera sesión.\n";
+
+        return reglamento;
+    }
+
+    // Método que despliega los lineamientos de Classroom
+    public String LineamientosClassroom() {
+        return "Lineamientos Classroom:\n"
+                + "- Portada-Diseño libre.\n"
+                + "- Logo UPQ Tema, Datos alumno, materia.\n"
+                + "- Conclusiones y aprendisaje (Conclusiones de lo aprendido dirante la actividad.";
+                
+    }
+
+    // Método que despliega las fechas de parciales
+    public String FechasDeParciales() {
+        return "Fechas de Parciales:\n"
+                + "- Parcial 1: 29-09-25\n"
+                + "- Parcial 2: 03-11-25\n"
+                + "- Parcial 3: 01-12-25";
+    }
+
+    // Método que despliega los porcentajes por parcial
+    public String PorcentajesPorParcial() {
+        return "Porcentajes de Evaluación:\n"
+                + "- Parcial 1: Evidencia conocimiento 40%\n"
+                + "Evidencia desempeño 20%\n"
+                + "Evidencia Producto 30%\n"
+                + "Proyecto integrador 10%\n"
+                + "- Parcial 2: Evidencia de conocimiento 40%\n"
+                + "Evidencia desempeño 20%\n"
+                + "Evidencia Producto 20%\n"
+                + "Proyecto integrador 20%\n"
+                + "- Parcial 3: Evidencia de conocimiento 20%\n"
+                + "Evidencia desempeño 10%\n"
+                + "Evidencia Producto 40%\n"
+                + "Proyecto integrador 30%\n";
+    }
+}
