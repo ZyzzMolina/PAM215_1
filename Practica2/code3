@@ -1,0 +1,23 @@
+const personas = [
+    { nombre: "Ana", edad: 22},
+    { nombre: "Luis", edad: 33},
+    { nombre: "Maria", edad: 28}
+];
+
+const personaLuis = personas.find(function(p) {
+  return p.nombre === "Luis";
+});
+
+console.log("Persona encontrada: " + personaLuis.nombre + " tiene " + personaLuis.edad + " años");
+
+console.log("Lista de personas:");
+personas.forEach(function(p) {
+  console.log(p.nombre + " tiene " + p.edad + " años");
+});
+
+
+const totalEdades = personas.reduce(function(acum, p) {
+  return acum + p.edad;
+}, 0);
+
+console.log("Suma total de edades: " + totalEdades);
