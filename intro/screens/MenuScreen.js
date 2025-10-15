@@ -37,8 +37,11 @@ export default function MenuScreen() {
         case 'menu':
         default:
             return (
-      <View style={styles.container}> 
-       <Text style={styles.texto}>MENU DE PRACTICAS</Text>
+
+      <View style={styles.container}>
+      <Text style={styles.texto}>MENU DE PRACTICAS</Text>
+      <View style={styles.contenedorbotones}>
+    
     <Button onPress={()=>setScreen('contador')} title='Pract:Contador' />
     <Button onPress={()=>setScreen('botones')} title='Pract:Buttons' />
     <Button onPress={()=>setScreen('textinput')} title='Pract:Text input & alert' />
@@ -48,7 +51,7 @@ export default function MenuScreen() {
     <Button onPress={()=>setScreen('flatlist')} title='Pract:Flat list' />
     <Button onPress={()=>setScreen('modal')} title='Pract:Modal' /> 
     <Button onPress={()=>setScreen('botom sheet')} title='Pract:Bottom sheet' />    
-      
+      </View>
       </View>
     )
             
@@ -86,7 +89,7 @@ const styles = StyleSheet.create({
 
   contenedorbotones:{
     marginTop: 20,
-    flexDirection:'row',
+    flexDirection:'column',
     gap:10,
 
   },
