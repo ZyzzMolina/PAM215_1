@@ -11,7 +11,7 @@ export default function TextInputScreen() {
             Alert.alert('Error', 'Por favor, complete todos los campos. (movil)');
             alert("Favor de llenar todos los campos (web)"); 
         } else {
-            // alert para movil
+            // alert para movil 
             Alert.alert(
                 "Datos Ingresados\n" + `Nombre: ${nombre}\nPassword: ${password}\nTelefono: ${telefono}`
             );
