@@ -196,21 +196,21 @@ export default function App() {
             <CategorySection
               title="TRABAJO"
               tasks={tasks.trabajo}
-              color="rgba(52, 152, 219, 0.7)"
+              color="rgba(52, 152, 219, 0.24)"
               onTaskToggle={(taskId) => handleTaskToggle('trabajo', taskId)}
             />
 
             <CategorySection
               title="PERSONAL"
               tasks={tasks.personal}
-              color="rgba(155, 89, 182, 0.7)"
+              color="rgba(156, 89, 182, 0.36)"
               onTaskToggle={(taskId) => handleTaskToggle('personal', taskId)}
             />
 
             <CategorySection
               title="ESTUDIOS"
               tasks={tasks.estudios}
-              color="rgba(46, 204, 113, 0.7)"
+              color="rgba(46, 204, 112, 0.29)"
               onTaskToggle={(taskId) => handleTaskToggle('estudios', taskId)}
             />
           </ScrollView>
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
-    backgroundColor: '#2c3e50',
+    backgroundColor: '#ffffffff',
   },
   container: {
     flex: 1,
