@@ -1,244 +1,218 @@
-// App.js
-import React, { useState, useEffect } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  ImageBackground,
-  Button,
-  Alert,
-  SafeAreaView,
-  StatusBar,
-  ActivityIndicator, // Para el splash screen
-  Platform,
-} from 'react-native';
+import { Text, StyleSheet, View, Pressable, Modal, TextInput } from 'react-native'
+import React, { useState } from 'react'
+ 
 
-// --- (Opcional) Datos de la Galería ---
-// Usamos fotos de Picsum para los ejemplos.
-const FOTOS = [
-  {
-    id: '1',
-    title: 'Bosque Nublado',
-    description: 'Un misterioso bosque cubierto de niebla.',
-    extendedDescription: 'Esta foto fue tomada al amanecer en las montañas, capturando la niebla matutina mientras se movía entre los árboles altos.',
-    imageUrl: 'https://picsum.photos/seed/1/400/300',
-  },
-  {
-    id: '2',
-    title: 'Playa Tropical',
-    description: 'Aguas cristalinas y arena blanca.',
-    extendedDescription: 'Una vista aérea de una playa paradisíaca remota, perfecta para escapar del ruido de la ciudad y relajarse bajo el sol.',
-    imageUrl: 'https://picsum.photos/seed/2/400/300',
-  },
-  {
-    id: '3',
-    title: 'Ciudad Nocturna',
-    description: 'Luces de la ciudad desde las alturas.',
-    extendedDescription: 'El horizonte de la ciudad cobra vida por la noche con millones de luces de oficinas y coches, creando un espectáculo visual.',
-    imageUrl: 'https://picsum.photos/seed/3/400/300',
-  },
-  {
-    id: '4',
-    title: 'Montañas Nevadas',
-    description: 'Picos majestuosos cubiertos de nieve.',
-    extendedDescription: 'Los picos de las montañas se elevan bruscamente hacia el cielo azul, cubiertos por una gruesa capa de nieve fresca de invierno.',
-    imageUrl: 'https://picsum.photos/seed/4/400/300',
-  },
-  {
-    id: '5',
-    title: 'Café Matutino',
-    description: 'Una taza de café caliente al vapor.',
-    extendedDescription: 'No hay nada como empezar el día con una taza de café recién hecho, cuyo aroma llena la habitación y despierta los sentidos.',
-    imageUrl: 'https://picsum.photos/seed/5/400/300',
-  },
-  {
-    id: '6',
-    title: 'Desierto Dorado',
-    description: 'Dunas de arena al atardecer.',
-    extendedDescription: 'Las dunas del vasto desierto brillan con un tono dorado intenso justo antes de que el sol se ponga en el horizonte.',
-    imageUrl: 'https://picsum.photos/seed/6/400/300',
-  },
-];
 
-// --- Requerimiento 4, 5, 6, 7 ---
-// Componente para cada tarjeta de foto
-const PhotoCard = ({ title, description, extendedDescription, imageUrl }) => {
+export default function ModalScreen() {
+
+  const[mostrar, setMostrar] = useState(false);
   
-  // Requerimiento 5: Mostrar Alerta
-  const onDetailsPress = () => {
-    Alert.alert(
-      title, // Título
-      extendedDescription, // Detalles
-      [{ text: 'Cerrar' }] // Botón
-    );
-  };
-
-  return (
-    // Requerimiento 7: Espaciado (con marginBottom)
-    // Requerimiento 6: Estilos consistentes (styles.cardContainer)
-    <View style={styles.cardContainer}>
-      
-      {/* Requerimiento 4: ImageBackground */}
-      <ImageBackground
-        source={{ uri: imageUrl }}
-        style={styles.imageBackground}
-        imageStyle={{ borderRadius: 10 }} // Para redondear la imagen de fondo
-      >
-        {/* Overlay para que el texto sea legible */}
-        <View style={styles.textOverlay}>
-          {/* Requerimiento 4: Título de la foto */}
-          <Text style={styles.cardTitle}>{title}</Text>
-          
-          {/* Requerimiento 4: Breve descripción */}
-          <Text style={styles.cardDescription}>{description}</Text>
-          
-          {/* Requerimiento 4: Botón "Ver detalles" */}
-          <View style={styles.buttonWrapper}>
-            <Button
-              title="Ver detalles"
-              onPress={onDetailsPress}
-              color={Platform.OS === 'ios' ? '#fff' : '#007AFF'}
-            />
-          </View>
-        </View>
-      </ImageBackground>
-    </View>
-  );
-};
-
-// --- Requerimiento 1: Splash Screen ---
-// Creamos un splash screen simulado en JS.
-const SplashScreen = () => (
-  <View style={styles.splashContainer}>
-    <Text style={styles.splashText}>Mi Galería</Text>
-    <ActivityIndicator size="large" color="#FFFFFF" />
-  </View>
-);
-
-// --- Componente Principal de la App ---
-export default function App() {
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Simula la carga de la app para mostrar el splash screen
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000); // Muestra el splash por 2 segundos
-  }, []);
-
-  // Requerimiento 1: Muestra el Splash Screen mientras carga
-  if (isLoading) {
-    return <SplashScreen />;
-  }
-
-  // --- Vista Principal de la Galería ---
-  return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" />
+    return (
       <View style={styles.container}>
-        
-        {/* Requerimiento 2: Título "Mi Galería" */}
-        <Text style={styles.mainTitle}>Mi Galería</Text>
 
-        {/* Requerimiento 3: ScrollView vertical */}
-        <ScrollView contentContainerStyle={styles.scrollViewContent}>
-          {FOTOS.map((foto) => (
-            <PhotoCard
-              key={foto.id}
-              title={foto.title}
-              description={foto.description}
-              extendedDescription={foto.extendedDescription}
-              imageUrl={foto.imageUrl}
-            />
-          ))}
-        </ScrollView>
+        <Text style={styles.titulo}>BIENVENIDO</Text>
+
+        <Pressable style={styles.boton} onPress={() => setMostrar('login')}>
+          <Text style={styles.text}>Iniciar Sesion</Text>
+        </Pressable>
+
+         <Pressable style={styles.boton} onPress={() => setMostrar('Registro')}>
+          <Text style={styles.text}>Registrarse</Text>
+        </Pressable>
+
+         <Pressable style={styles.boton} onPress={() => setMostrar('alerta')}>
+          <Text style={styles.text}>Alerta</Text>
+        </Pressable>
+
+        <Modal
+          animationType='slide'
+          visible={mostrar === 'login' }
+          transparent={true}
+          onRequestClose={() => setMostrar(null)}
+        >
+          <View style={styles.container2}>
+
+            <Text style={styles.titulo}> Formulario de inicio de sesion </Text>
+
+            <TextInput placeholder='Ingrese su usuario' style={styles.input} />
+            <TextInput placeholder='Ingrese su contraseña' style={styles.input} secureTextEntry={true} />
+
+            <Pressable style={styles.boton} onPress={() => setMostrar(null)}>
+          <Text style={styles.text}>Iniciar Sesion</Text>
+        </Pressable>
+
+
+          </View>
+
+
+        </Modal>
+
+        <Modal
+          animationType='slide'
+          visible={mostrar === 'Registro' }
+          transparent={true}
+          onRequestClose={() => setMostrar(null)}
+        >
+          <View style={styles.container2}>
+
+            <Text style={styles.titulo}> Formulario de inicio de sesion </Text>
+
+            <TextInput placeholder='Ingrese su usuario' style={styles.input} />
+            <TextInput placeholder='Ingrese su Email'  keyboardType="email-address" style={styles.input} />
+            <TextInput placeholder='Ingrese su contraseña' style={styles.input} secureTextEntry={true} />
+
+            <Pressable style={styles.boton} onPress={() => setMostrar(null)}>
+          <Text style={styles.text}>Registrarse</Text>
+        </Pressable>
+
+
+          </View>
+
+
+        </Modal>
+
+        <Modal
+        animationType='fade'
+        transparent={false}
+        visible={mostrar === 'alerta'}
+        onRequestClose={() => setMostrar(null)}
+        >
+          <View style={styles.container3}>
+
+            <View style={styles.containerAlerta}> 
+
+              <Text style={styles.textAlerta}> Esta es una alerta </Text>
+
+              <View style={styles.containerBoton}>
+
+                <Pressable style={styles.boton1} onPress={() => setMostrar(null)}>
+          <Text style={styles.text}>Ok</Text>
+        </Pressable>
+
+        <Pressable style={styles.boton2} onPress={() => setMostrar(null)}>
+          <Text style={styles.text}>Cerrar</Text>
+        </Pressable>
+
+              </View>
+              
+            </View>
+
+            </View>
+          
+
+        </Modal>
+
       </View>
-    </SafeAreaView>
-  );
+    )
 }
 
-// --- Requerimiento 6 y 7: Estilos y Espaciado ---
 const styles = StyleSheet.create({
-  // Estilos del Splash
-  splashContainer: {
+  container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#007AFF', // Un color de fondo
+    backgroundColor: '#f5f5f5',
+    padding: 20,
   },
-  splashText: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
-    marginBottom: 20,
-  },
-  
-  // Estilos de la App Principal
-  safeArea: {
+  container2: {
     flex: 1,
-    backgroundColor: '#f4f4f4', // Fondo general de la app
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.95)',
+    padding: 30,
   },
-  container: {
+  container3: {
     flex: 1,
-    paddingHorizontal: 15, // Espaciado lateral
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    padding: 20,
   },
-  
-  // Estilo del Título Principal (Req 2)
-  mainTitle: {
+  titulo: {
     fontSize: 28,
-    fontWeight: 'bold',
+    fontWeight: '600',
+    color: '#2c3e50',
+    marginBottom: 40,
     textAlign: 'center',
-    marginVertical: 20, // Espaciado (Req 7)
-    color: '#333',
+    letterSpacing: 0.5,
   },
-  
-  // Estilos del ScrollView (Req 3)
-  scrollViewContent: {
-    paddingBottom: 20, // Espacio al final del scroll
-  },
-
-  // Estilos de la Tarjeta (Req 4, 6, 7)
-  cardContainer: {
-    borderRadius: 10,
-    overflow: 'hidden', // Necesario para que ImageBackground respete el borderRadius
-    marginBottom: 20, // Espaciado entre tarjetas (Req 7)
-    
-    // Sombra para dar profundidad
-    elevation: 5, // Android
-    shadowColor: '#000', // iOS
+  boton: {
+    backgroundColor: '#2c3e50',
+    paddingVertical: 16,
+    paddingHorizontal: 40,
+    borderRadius: 12,
+    marginVertical: 8,
+    width: '85%',
+    alignItems: 'center',
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
-  imageBackground: {
+  text: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#ffffff',
+    letterSpacing: 0.5,
+  },
+  input: {
+    width: '90%',
+    height: 54,
+    borderColor: '#e0e0e0',
+    borderWidth: 1.5,
+    borderRadius: 12,
+    paddingHorizontal: 18,
+    paddingVertical: 15,
+    marginVertical: 10,
+    backgroundColor: '#ffffff',
+    fontSize: 15,
+    color: '#2c3e50',
+  },
+  containerAlerta: {
+    width: '85%',
+    backgroundColor: '#ffffff',
+    borderRadius: 16,
+    padding: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  textAlerta: {
+    fontSize: 18,
+    fontWeight: '500',
+    color: '#2c3e50',
+    textAlign: 'center',
+    marginBottom: 10,
+    lineHeight: 24,
+  },
+  boton1: {
+    backgroundColor: '#2c3e50',
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+    borderRadius: 10,
+    flex: 1,
+    alignItems: 'center',
+    marginHorizontal: 6,
+  },
+  boton2: {
+    backgroundColor: '#95a5a6',
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+    borderRadius: 10,
+    flex: 1,
+    alignItems: 'center',
+    marginHorizontal: 6,
+  },
+  containerBoton: {
+    flexDirection: 'row',
     width: '100%',
-    height: 200, // Altura fija para las tarjetas
-    justifyContent: 'flex-end', // Alinea el contenido (texto) al fondo
-  },
-  textOverlay: {
-    // Overlay semitransparente para legibilidad
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    padding: 10,
-  },
-  cardTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
-    marginBottom: 4,
-  },
-  cardDescription: {
-    fontSize: 14,
-    color: '#EEEEEE',
-    marginBottom: 8,
-  },
-  buttonWrapper: {
-    // Envolvemos el botón para mejor control de estilo si es necesario
-    alignSelf: 'flex-start', // Para que el botón no ocupe todo el ancho
-    // Fix para el color del botón en iOS dentro del overlay
-    ...(Platform.OS === 'ios' && {
-      backgroundColor: '#007AFF',
-      borderRadius: 5,
-    }),
+    marginTop: 24,
+    justifyContent: 'center',
+    gap: 12,
   },
 });
