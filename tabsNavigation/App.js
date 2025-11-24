@@ -1,7 +1,8 @@
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
+import React from 'react';
 import Home from './screens/home';
 import Profile from './screens/profile';
 import Settings from './screens/settings';
@@ -71,7 +72,15 @@ export default function App() {
         <Tab.Screen 
           name="Profile" 
           component={ProfileStack}
-          options={{ headerShown: false }}
+          options={({ route }) => {
+            const routeName = getFocusedRouteNameFromRoute(route) ?? 'MainProfile';
+            return {
+              headerShown: false,
+              tabBarStyle: routeName === 'Duser' 
+                ? { display: 'none' }
+                : { paddingBottom: 5, height: 60 }
+            };
+          }}
         />
         <Tab.Screen 
           name="Settings" 
