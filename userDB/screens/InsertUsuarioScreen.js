@@ -8,6 +8,7 @@ export default function InsertUsuarioScreen() {
   const [nombre, setNombre] = useState('');
   const [loading, setLoading] = useState(true);
   const [guardando, setGuardando] = useState(false);
+  const [editandoId, setEditandoId] = useState(null);
 
   // Instancia del controlador
   const [controller] = useState(() => new UsuarioController());
@@ -42,34 +43,81 @@ export default function InsertUsuarioScreen() {
 
   const handleInsert = async () => {
     try {
-        // La validación ahora ocurrirá dentro del controller
-        // Si el nombre está vacío o mal, el controller lanzará error
+      setGuardando(true);
+      
+      if (editandoId) {
+        // MODO EDICIÓN
+        await controller.actualizarUsuario(editandoId, nombre);
+        setEditandoId(null);
         
-        setGuardando(true);
-        const nuevoUsuario = await controller.crearUsuario(nombre); 
-        
-        setNombre(''); // Limpiar input
-
-        // ALERTA DE ÉXITO
         if (Platform.OS === 'web') {
-            alert(`Usuario Creado: "${nuevoUsuario.nombre}" con ID: ${nuevoUsuario.id}`);
+          alert(`Usuario actualizado: "${nombre}"`);
         } else {
-            Alert.alert(
-                'Usuario Creado',
-                `"${nuevoUsuario.nombre}" guardado con ID: ${nuevoUsuario.id}`
-            );
+          Alert.alert('Éxito', `Usuario actualizado: "${nombre}"`);
         }
-
+      } else {
+        // MODO CREACIÓN
+        const nuevoUsuario = await controller.crearUsuario(nombre);
+        
+        if (Platform.OS === 'web') {
+          alert(`Usuario Creado: "${nuevoUsuario.nombre}" con ID: ${nuevoUsuario.id}`);
+        } else {
+          Alert.alert('Usuario Creado', `"${nuevoUsuario.nombre}" guardado con ID: ${nuevoUsuario.id}`);
+        }
+      }
+      
+      setNombre('');
     } catch (error) {
-        // ALERTA DE ERROR (Validación o BD)
-        const mensaje = error.message || 'Error desconocido';
-        if (Platform.OS === 'web') {
-            alert(mensaje);
-        } else {
-            Alert.alert('Error', mensaje);
-        }
+      const mensaje = error.message || 'Error desconocido';
+      if (Platform.OS === 'web') {
+        alert(mensaje);
+      } else {
+        Alert.alert('Error', mensaje);
+      }
     } finally {
-        setGuardando(false);
+      setGuardando(false);
+    }
+  };
+
+  const handleEditar = (usuario) => {
+    setNombre(usuario.nombre);
+    setEditandoId(usuario.id);
+  };
+
+  const handleCancelar = () => {
+    setNombre('');
+    setEditandoId(null);
+  };
+
+  const handleEliminar = async (id, nombre) => {
+    const confirmar = Platform.OS === 'web' 
+      ? window.confirm(`¿Eliminar a "${nombre}"?`)
+      : await new Promise(resolve => {
+          Alert.alert(
+            'Confirmar eliminación',
+            `¿Eliminar a "${nombre}"?`,
+            [
+              { text: 'Cancelar', style: 'cancel', onPress: () => resolve(false) },
+              { text: 'Eliminar', style: 'destructive', onPress: () => resolve(true) }
+            ]
+          );
+        });
+    
+    if (confirmar) {
+      try {
+        await controller.eliminarUsuario(id);
+        if (Platform.OS === 'web') {
+          alert('Usuario eliminado');
+        } else {
+          Alert.alert('Éxito', 'Usuario eliminado');
+        }
+      } catch (error) {
+        if (Platform.OS === 'web') {
+          alert(error.message);
+        } else {
+          Alert.alert('Error', error.message);
+        }
+      }
     }
   };
 
@@ -97,6 +145,20 @@ export default function InsertUsuarioScreen() {
             {item.fecha_creacion ? formatearFecha(item.fecha_creacion) : 'Fecha no disponible'}
           </Text>
         </View>
+        <View style={styles.userActions}>
+          <TouchableOpacity 
+            style={styles.editButton} 
+            onPress={() => handleEditar(item)}
+          >
+            <Text style={styles.actionButtonText}>✎</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.deleteButton} 
+            onPress={() => handleEliminar(item.id, item.nombre)}
+          >
+            <Text style={styles.actionButtonText}>×</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   };
@@ -123,9 +185,18 @@ export default function InsertUsuarioScreen() {
           disabled={guardando} 
         >
           <Text style={styles.buttonText}>
-            {guardando ? 'Guardando...' : 'Agregar Usuario'}
+            {guardando 
+              ? (editandoId ? 'Actualizando...' : 'Guardando...') 
+              : (editandoId ? 'Actualizar Usuario' : 'Agregar Usuario')
+            }
           </Text>
         </TouchableOpacity>
+
+        {editandoId && (
+          <TouchableOpacity style={styles.cancelButton} onPress={handleCancelar}>
+            <Text style={styles.cancelButtonText}>Cancelar</Text>
+          </TouchableOpacity>
+        )}
       </View>
 
       <View style={styles.selectSection}>
@@ -182,6 +253,12 @@ const styles = StyleSheet.create({
   userName: { fontSize: 16, fontWeight: '600', color: '#333', marginBottom: 4 },
   userId: { fontSize: 12, color: '#007AFF', marginBottom: 2 },
   userDate: { fontSize: 12, color: '#666' },
+  userActions: { flexDirection: 'row', gap: 8 },
+  editButton: { backgroundColor: '#e3f2fd', padding: 10, borderRadius: 8, width: 38, alignItems: 'center', borderWidth: 1, borderColor: '#007AFF' },
+  deleteButton: { backgroundColor: '#ffebee', padding: 10, borderRadius: 8, width: 38, alignItems: 'center', borderWidth: 1, borderColor: '#f44336' },
+  actionButtonText: { fontSize: 20, color: '#333', fontWeight: '600' },
+  cancelButton: { backgroundColor: '#757575', padding: 16, borderRadius: 8, alignItems: 'center', marginTop: 10 },
+  cancelButtonText: { color: '#fff', fontSize: 16, fontWeight: '600' },
   emptyContainer: { alignItems: 'center', paddingVertical: 40 },
   emptyList: { flex: 1, justifyContent: 'center' },
   emptyText: { fontSize: 18, color: '#999' }

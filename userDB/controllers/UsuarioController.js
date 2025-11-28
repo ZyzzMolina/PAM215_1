@@ -51,6 +51,36 @@ export class UsuarioController {
         }
     }
 
+    // Función para ACTUALIZAR usuario
+async actualizarUsuario(id, nombre) {
+  try {
+    // Validar datos
+    Usuario.validar(nombre);
+    
+    // Actualizar en BD
+    await DatabaseService.update(id, nombre.trim());
+    
+    // Notificar cambios
+    this.notifyListeners();
+    
+    return { id, nombre: nombre.trim() };
+  } catch (error) {
+    console.error('Error al actualizar usuario:', error);
+    throw error;
+  }
+}
+
+// Función para ELIMINAR usuario
+async eliminarUsuario(id) {
+  try {
+    await DatabaseService.delete(id);
+    this.notifyListeners();
+  } catch (error) {
+    console.error('Error al eliminar usuario:', error);
+    throw new Error('No se pudo eliminar el usuario');
+  }
+}
+
     // 5.5: Sistema de observadores
     addListener(callback) {
         this.listeners.push(callback);

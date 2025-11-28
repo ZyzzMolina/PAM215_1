@@ -91,6 +91,39 @@ class DatabaseService {
       };
     }
   }
+
+  // Función para ACTUALIZAR un usuario
+async update(id, nombre) {
+  if (Platform.OS === 'web') {
+    const usuarios = await this.getAll();
+    const index = usuarios.findIndex(u => u.id === id);
+    if (index !== -1) {
+      usuarios[index].nombre = nombre;
+      localStorage.setItem(this.storageKey, JSON.stringify(usuarios));
+      return usuarios[index];
+    }
+    throw new Error('Usuario no encontrado');
+  } else {
+    await this.db.runAsync(
+      'UPDATE usuarios SET nombre = ? WHERE id = ?',
+      nombre,
+      id
+    );
+    return { id, nombre };
+  }
+}
+
+// Función para ELIMINAR un usuario
+async delete(id) {
+  if (Platform.OS === 'web') {
+    const usuarios = await this.getAll();
+    const filtered = usuarios.filter(u => u.id !== id);
+    localStorage.setItem(this.storageKey, JSON.stringify(filtered));
+  } else {
+    await this.db.runAsync('DELETE FROM usuarios WHERE id = ?', id);
+  }
+}
+
 }
 
 export default new DatabaseService();
