@@ -46,8 +46,7 @@ class DatabaseService {
         for (const usuario of usuariosSinFecha) {
           await this.db.runAsync(
             'UPDATE usuarios SET fecha_creacion = ? WHERE id = ?',
-            new Date().toISOString(),
-            usuario.id
+            [new Date().toISOString(), usuario.id]
           );
         }
       }
@@ -80,14 +79,13 @@ class DatabaseService {
 
       const result = await this.db.runAsync(
         'INSERT INTO usuarios(nombre, fecha_creacion) VALUES(?, ?)',
-        nombre,
-        fechaCreacion // Pasamos la fecha ISO
+        [nombre, fechaCreacion]
       );
       
       return {
         id: result.lastInsertRowId,
         nombre,
-        fecha_creacion: fechaCreacion // Retornamos la fecha ISO
+        fecha_creacion: fechaCreacion
       };
     }
   }
@@ -106,8 +104,7 @@ async update(id, nombre) {
   } else {
     await this.db.runAsync(
       'UPDATE usuarios SET nombre = ? WHERE id = ?',
-      nombre,
-      id
+      [nombre, id]
     );
     return { id, nombre };
   }
@@ -120,7 +117,7 @@ async delete(id) {
     const filtered = usuarios.filter(u => u.id !== id);
     localStorage.setItem(this.storageKey, JSON.stringify(filtered));
   } else {
-    await this.db.runAsync('DELETE FROM usuarios WHERE id = ?', id);
+    await this.db.runAsync('DELETE FROM usuarios WHERE id = ?', [id]);
   }
 }
 
